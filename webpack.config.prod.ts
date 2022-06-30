@@ -1,4 +1,4 @@
-import webpackConfig from "./webpack.config";
+import webpackConfig, { devServer } from "./webpack.config";
 import { merge } from "webpack-merge";
 import { Configuration } from "webpack";
 import TerserPlugin from "terser-webpack-plugin";
@@ -11,17 +11,13 @@ const CssOptions: MiniCssExtractPlugin.PluginOptions = {
 
 const productionConfig = merge(webpackConfig, <Configuration>{
   mode: "production",
+  devServer: undefined,
   plugins: [new MiniCssExtractPlugin(CssOptions)],
   module: {
     rules: [
       {
         test: /\.(s(a|c)ss)$/,
         use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
-      },
-      {
-        test: /\.ts$/,
-        use: ["ts-loader"],
-        exclude: /node_modules/,
       },
     ],
   },

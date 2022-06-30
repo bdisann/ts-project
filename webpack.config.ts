@@ -15,7 +15,7 @@ const HtmlOptions: HtmlWebpackOptions = {
 };
 
 export const devServer: DevServerConfiguration = {
-  port: 4200,
+  port: 4567,
   hot: true,
   proxy: proxyConfiguration,
   static: path.resolve(__dirname, "dev"),
@@ -24,7 +24,7 @@ export const devServer: DevServerConfiguration = {
 const webpackConfig: Configuration = {
   devServer,
   mode: "development",
-  entry: "./src/index.ts",
+  entry: "./src/index.tsx",
   plugins: [
     new HtmlWebpackPlugin(HtmlOptions),
     new ForkTsCheckerWebpackPlugin({ async: false }),
@@ -36,9 +36,14 @@ const webpackConfig: Configuration = {
         use: ["html-loader"],
       },
       {
-        test: /\.ts$/,
+        test: /\.(js|ts)x?$/,
         exclude: /node_modules/,
         use: ["babel-loader"],
+      },
+      {
+        test: /\.ts$/,
+        use: ["ts-loader"],
+        exclude: /node_modules/,
       },
       {
         test: /\.(s(a|c)ss)$/,
@@ -47,7 +52,7 @@ const webpackConfig: Configuration = {
     ],
   },
   resolve: {
-    extensions: [".js", ".ts", ".json"],
+    extensions: [".js", ".jsx", ".tsx", ".ts", ".json"],
   },
 };
 
