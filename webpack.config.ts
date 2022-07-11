@@ -19,6 +19,7 @@ export const devServer: DevServerConfiguration = {
   hot: true,
   proxy: proxyConfiguration,
   static: path.resolve(__dirname, "dev"),
+  historyApiFallback: true,
 };
 
 const webpackConfig: Configuration = {
